@@ -22,11 +22,17 @@ export const useCollectionsStore = defineStore('collectionsStore', () => {
 			.filter((collection) => collection.meta && collection.meta?.hidden !== true)
 	);
 
-	const allCollections = computed(() =>
-		collections.value.filter(({ collection }) => collection.startsWith('directus_') === false)
-	);
+	const allCollections = computed(() => {
+		console.log('collections.value', collections.value);
+		return collections.value.filter(({ collection }) => collection.startsWith('directus_') === false);
+	});
 
-	const databaseCollections = computed(() => allCollections.value.filter((collection) => collection.schema));
+	const databaseCollections = computed(() =>
+		allCollections.value.filter((collection) => {
+			console.log(collection);
+			return collection.schema;
+		})
+	);
 
 	const crudSafeSystemCollections = computed(() =>
 		orderBy(
@@ -67,6 +73,7 @@ export const useCollectionsStore = defineStore('collectionsStore', () => {
 	}
 
 	function prepareCollectionForApp(collection: CollectionRaw): Collection {
+		console.log('collectionRaw', collection.collection);
 		const icon = collection.meta?.icon || 'label';
 		const color = collection.meta?.color;
 		let name = formatTitle(collection.collection);

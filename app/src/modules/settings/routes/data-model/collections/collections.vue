@@ -81,6 +81,7 @@
 			</v-list>
 
 			<v-detail :label="t('system_collections')">
+				{{ systemCollections }}
 				<collection-item
 					v-for="collection of systemCollections"
 					:key="collection.collection"
